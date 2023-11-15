@@ -61,14 +61,9 @@ with open('./task5_r.json', 'w', encoding='utf-8') as out:
     out.write(json.dumps(result))
 
 with open('./task5_r.msgpack', 'wb') as out:
-    out.write(msgpack.packb(result))
+    out.write(msgpack.packb(dataset))
 
-df_obj = {}
-
-for dict in result:
-    df_obj.update(dict)
-
-df = pd.DataFrame([df_obj])
+df = pd.DataFrame([x for x in dataset])
 
 with open('./task5_r.csv', 'w', encoding='utf-8') as out:
     out.write(df.to_csv(index=False))
