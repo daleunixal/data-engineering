@@ -6,7 +6,7 @@ import json
 
 def analyze_dataset(file_path, prefix):
     # Загрузка набора данных из файла
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, usecols=lambda column: column != 'Unnamed: 0')
 
     # Анализ параметров
     memory_usage = df.memory_usage(index=True).sum()
@@ -64,8 +64,9 @@ def analyze_dataset(file_path, prefix):
     return memory_usage, memory_usage_optimized
 
 for i, file in enumerate(os.listdir('./data/dataset_6')):
-    memory_usage, memory_usage_optimized = analyze_dataset(f"./data/dataset_6/{file}", f"[{i}]")
+    if file == '[6]spotify.csv':
+        memory_usage, memory_usage_optimized = analyze_dataset(f"./data/dataset_6/{file}", f"[{i}]")
 
-    print(f"Memory usage before optimization: {memory_usage} bytes")
-    print(f"Memory usage after optimization: {memory_usage_optimized} bytes")
+        print(f"Memory usage before optimization: {memory_usage} bytes")
+        print(f"Memory usage after optimization: {memory_usage_optimized} bytes")
 
